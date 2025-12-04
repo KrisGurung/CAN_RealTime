@@ -7,9 +7,7 @@ from std_msgs.msg import Float32
 
 # ... (VehicleState Class remains the same: The Safety Vault) ...
 
-# ==========================================
-# 2. THE ROS NODE (The "Shouter")
-# ==========================================
+# THE ROS NODE 
 class DataBridgeNode(Node):
     def __init__(self):
         super().__init__('can_data_bridge')
@@ -29,9 +27,7 @@ class DataBridgeNode(Node):
         self.pub_speed.publish(msg_speed)
         self.pub_steer.publish(msg_steer)
 
-# ==========================================
-# 3. THE HYBRID LISTENER (The Integration Point)
-# ==========================================
+# THE HYBRID LISTENER
 def hybrid_listener(vehicle_state, ros_node):
     """
     This runs in the background. It reads CAN, updates the vault, 
@@ -40,18 +36,17 @@ def hybrid_listener(vehicle_state, ros_node):
     import random # Simulating CAN data
     
     while True:
-        # A. READ CAN (The "Spinal Cord" action)
-        # In real life, this comes from the CAN bus hardware
         raw_speed = random.uniform(40, 60)
         raw_steer = random.uniform(-5, 5)
         
-        # B. UPDATE SAFETY VAULT (Critical!)
+        # B. UPDATE SAFETY VAULT
         # The main control loop needs this INSTANTLY
         vehicle_state.update_speed(raw_speed)
         vehicle_state.update_steering(raw_steer)
         
-        # C. UPDATE ROS 2 (Integration!)
-        # We tell the ROS node to broadcast this to the HMI/Planner
+        ## K-NOTE: Change ROS2 Broadcasting from within the Vault/Mutex instead 
+        ## for actual/final functionality. 
+        # ROS node broadcasts this to the HMI/Planner
         ros_node.broadcast_data(raw_speed, raw_steer)
         
         time.sleep(0.01) # Simulate CAN speed (100Hz)
