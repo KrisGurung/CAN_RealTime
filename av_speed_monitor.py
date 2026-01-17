@@ -1,3 +1,6 @@
+## NOTE: This script gives an outline of how the CAN Buffering system would work - it has un-filled out 
+## functions and some placeholder equations. 
+
 class VehicleState:
     def __init__(self):
         # DATA
