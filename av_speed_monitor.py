@@ -51,7 +51,7 @@ class VehicleState:
         return state_snapshot
 
 # 2) Listener (DAEMON)
-def can_bus_callback(vehicle_state):
+# def can_bus_callback(vehicle_state):
 
 
 # 3) CONTROL LOOP
@@ -70,9 +70,9 @@ def main_control_loop():
     print("[AV CONTROLLER] System initialized. Starting main loop...")
 
     # MAIN LOOP (Placeholder for CAN detecting logic)
-    try:
+    # try:
             
-    except:
+    # except:
 
 if __name__ == "__main__":
     main_control_loop()
